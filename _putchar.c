@@ -1,8 +1,12 @@
 #include <unistd.h>
 
-//putchar - function to return character to stdout
+/**
+ * _putchar- print a character
+ * @c: The character to print
+ * Return: int
+ */
 
 int _putchar(char c)
 {
-	return(write(1, &c, 1));
+	return (write(1, &c, 1));
 }
