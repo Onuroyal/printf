@@ -1,79 +1,94 @@
-# printf
-This repo contains scripts for ALX printf project.
+# ALX Software Enginering Printf Team Project
+This team project is a custom made printf function for the C programming language called \_printf. It has been optimized to take various inputs and optional arguments based exactly on how the standard library function printf works. We submitted this as part of the ALX software engineering course requirement for grading.
 
-## Contributors
-- [Abah Onuche](https://github.com/Onuroyal/)
-- [Naheem Adebisi](https://github.com/surfix/) 
+## **Synopsis**
+This function **\_printf()** writes output to stdout, the standard output stream with the format and options without making use of any of the standard library files. It was written to use a local buffer of 1024 bytes when printing although it can print larger sets of data.
 
-## Resources
-Read or Watch:
-- [Secrets of printf](https://alx-intranet.hbtn.io/rltoken/gxdsTXxWMklkBTgY197HYQ)
-- Group Projects concept Page
-- Flowcharts concept Page
+The \_printf() function returns the total number of characters printed to the stdout(excluding the null byte at the end of strings) after a successful execution.
 
-man or help:
-- printf (3)
+If an output error is encountered, a negative value of -1 is returned.
 
+The prototype of this function is:  **int _printf(const char *format, ...);***
 
-## Requirements
-### General
-- Allowed editors: vi, vim, emacs
-- All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
-- All your files should end with a new line
-- A README.md file, at the root of the folder of the project is mandatory
-- Your code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
-- You are not allowed to use global variables
-- No more than 5 functions per file
-- In the following examples, the main.c files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own main.c files at compilation. Our main.c files might be different from the one shown in the examples
-- The prototypes of all your functions should be included in your header file called main.h
-- Don’t forget to push your header file
-- All your header files should be include guarded
-- Note that we will not provide the _putchar function for this projec
+This means that it has one mandatory format argument, and an extra number of arguments that can be none, or many.
 
-### Authorized functions and macros
-- write (man 2 write)
-- malloc (man 3 malloc)
-- free (man 3 free)
-- va_start (man 3 va_start)
-- va_end (man 3 va_end)
-- va_copy (man 3 va_copy)
-- va_arg (man 3 va_arg
+**Format of the format string**
 
-### Compilation
-Your code will be compiled this way:
-`$ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c`
+The format string is a character string starting and ending with double quotes. The format string is composed of zero or more directives; ordinary characters (not %), and conversion specifications, each of which results in fetching zero or more subsequent arguments. 
 
-- As a consequence, be careful not to push any c file containing a main function in the root directory of your project (you could have a test folder containing all your tests files including main functions)
-- Our main files will include your main header file (main.h): #include main.h
-- You might want to look at the gcc flag -Wno-format when testing with your _printf and the standard printf. Example of test file that you could use:
+Each conversion specification is introduced by the character **%** and ends with a **conversion specifier**. In between there may be (in this order):
 
-## Tasks
+> Zero or more **flags**
+>
+> An optional field **width**
+>
+> An optional **precision** modifier
+>
+> An optional **length** modifier
 
-`0. I'm not going anywhere. You can print that wherever you want to. I'm here and I'm a Spur for life`
+**The flag characters**
 
-Write a function that produces output according to a format.
+|**Flag**| Description  |
+|--|--|
+|**#**| For **o** conversions the first character of the output string is made zero (by prefixing a 0 if it was not zero already).  For **x** and **X** conversions, a nonzero result has the string "**0x**" or "**0X**" respectively added. |
+|**0**| (Not implemented yet) The  value should be zero padded. For **d**, **i**, **o**, **u**, **x**, and **X** the converted value is padded on the left with zeros. If the 0 and **-** flags both appear,the **0** flag is ignored. If a precision is given with a numeric conversion, the **0** flag is ignored.|
+|**-**|(Minus sign, not implemented yet) The converted value is to be left adjusted on the field boundary, (Default is right justification) and  padded  with  blanks  in  the right rather than on the left with blanks or zeros. This flag overrides **0** if both are given.|
+|' '| (Blank Space) The argument is padded with a single blank space before a positive number or empty string produced by a signed conversion.|
+|**+**| A sign (+ or -) should always be placed before a number produced with a signed conversion.  By default, only negative numbers have this sign.|
 
-- Prototype: int _printf(const char *format, ...);
-- Returns: the number of characters printed (excluding the null byte used to end output to strings)
-- write output to stdout, the standard output stream
-- format is a character string. The format string is composed of zero or more directives. See man 3 printf for more detail. You need to handle the following conversion specifiers:
-	- c
-	- s
-	- %
-- You don’t have to reproduce the buffer handling of the C library printf function
-- You don’t have to handle the flag characters
-- You don’t have to handle field width
-- You don’t have to handle precision
-- You don’t have to handle the length modifiers
+**The field width**
 
-Repo:
+An  optional decimal digit string (with nonzero first digit) specifying a minimum field width.  If  the  converted  value  has  fewer characters  than  the field width, it will be padded with spaces on the left if the flag - is not present, and on the right  if  it  is present.  A character * can be used instead of a decimal string. In this case, an argument passed to the function will be taken as  the width value.
 
-- GitHub repository: printf
+    printf("%5d", num);
 
-File: _printf.c
+or
 
-DESCRIPTION The function "_printf" writes output to stdout, the standard output. The function writes under the control of a format string that specifies how subsequent arguments (accessed via the variable-length argument facilities of stdarg) are converted for output.
+	printf("%*d", width, num);
 
-RETURN VALUE Upon successful return, "_printf()" returns the number of characters printed (excluding the null byte used to end output to strings).
+**The precision**
 
-If an output error is encountered, -1 is returned. ...
+ An  optional  precision,  in  the  form  of a period ('.')  followed by an optional decimal digit string.  A negative precision is taken  as  if  the precision were omitted.  This gives the minimum number of digits to appear for d, i, o, u, x, and X conversions,  or the  maximum  number of characters to be printed from a string for s and S conversions. A character * can be used instead of a  decimal string. In this case, an argument passed to the function will be taken as the precision value.
+
+    printf("%.3d", num);
+
+  or
+
+    printf("%.*d", precision, num);
+
+**The length modifiers**
+
+|Modifier| Description |
+|--|--|
+|**l**| An integer conversion to a **long int** or **unsigned long int** argument.  |
+|**h**| An integer conversion to a **short int** or **unsigned short int** argument. |
+
+**The conversion specifier**
+
+|Specifier| Description |
+|--|--|
+|**d, i**|The argument **int** is converted to a signed decimal notation. If precision is present,it gives the minimum number of digits that must appear; if the converted value requires fewer digits, then it is padded with zeros on the left. Default precision is 1.|
+|**o, u, x, X**|The argument is converted to unsigned octal (**o**), unsigned decimal (**u**), or unsigned hexamedical (**x** and **X**) notation. The letters abcdef are used for x conversion and the letters ABCDEF are used for X conversion. If precision is present, it will give  the  minimum  number  of  digits  that  must appear; if the converted value requires fewer digits, then it will be padded with zeros. By default the precision is 1.  |
+|**c**|The  int argument is converted to an unsigned char and the resulting character is written. The representation of characters is based off the ASCII coding.|
+|**s**|The argument received is expected to be a pointer type char * to an array of characters.  Characters from this array are printed up  to  (but  not including) a null byte  (**'\0'**).  If precision is specified, then this will determine how many characters are taken into account for printing.|
+|**p**|A void * pointer argument is printed as hexadecimal in lower caps representing an adress in memory.|
+|**%**|A  ' **%** ' character is written and no conversion is made. The specification is as follows: **%%**. |
+|**b**|The argument is converted to an unsigned int value and then operated to get its binary representation (base 2).|
+|**S**| The  argument  received  is expected to be a pointer type char * to an array of characters.  Characters from this array are printed up to (but not including) a null byte  ('\0').  Non printable characters (0 < ASCII value < 32 or >= 127) are printed this way: \x, followed by  the  ASCII  code value in hexadecimal (upper case - always 2 characters). |
+|**r**|The  argument received is expected to be a pointer type char * to an array of characters.  Characters from this array are printed in reverse order up to (but not including) a null byte  ('\0').  |
+|**R**|The argument received is expected to be a pointer type char * to an array of characters.  Characters from this array  are  encoded  to  ROT13  and printed in order up to (but not including a null byte  ('\0').  |
+
+# Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine (Linux distro) for development and testing purposes.
+
+## **Installing**
+
+You will need to clone the repository of the project from Github. This will contain the _printf function and all of its dependencies. No main.c file will be provided for testing, so you will need to create one.
+
+    git clone https://github.com/ehoneahobed/printf.git
+
+After cloning the repository you will have a folder called printf. In here there will be several files that allow the function to work.
+
+```Submitted by```
+```Ehoneah OBED and Hakeem BADEJO```
